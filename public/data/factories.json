@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "dataset": "factories",
+  "is_sample": true,
+  "updated_at": "2026-10-09T00:00:00+07:00",
+  "records": [
+    {
+      "id": "sample-factory-001",
+      "name": "โรงงานแปรรูปข้าว ตัวอย่าง A (สมมติ)",
+      "province_code": "20",
+      "province": "ชลบุรี",
+      "district": "พนัสนิคม",
+      "coordinates": [101.2, 13.44],
+      "business_type_code": "grain-processing",
+      "business_type": "แปรรูปธัญพืช",
+      "agricultural_inputs": ["ข้าว"],
+      "products": ["ข้าวสาร", "รำข้าว"],
+      "capacity": {"value": 120, "unit": "tonne/day", "basis": "วัตถุดิบเข้า (สมมติ)"},
+      "estate_id": null,
+      "source": {"name": "โรงงานและตำแหน่งสมมติสำหรับทดสอบ ไม่ใช่ผู้ประกอบการจริง", "url": null},
+      "updated_at": "2026-10-09T00:00:00+07:00"
+    },
+    {
+      "id": "sample-factory-002",
+      "name": "บริษัทผลิตแป้ง ตัวอย่าง B (สมมติ)",
+      "province_code": "21",
+      "province": "ระยอง",
+      "district": "บ้านค่าย",
+      "coordinates": [101.29, 12.88],
+      "business_type_code": "starch-processing",
+      "business_type": "ผลิตแป้ง",
+      "agricultural_inputs": ["มันสำปะหลัง"],
+      "products": ["แป้งมันสำปะหลัง"],
+      "capacity": {"value": null, "unit": "tonne/day", "basis": null},
+      "estate_id": null,
+      "source": {"name": "โรงงานและตำแหน่งสมมติสำหรับทดสอบ ไม่ใช่ผู้ประกอบการจริง", "url": null},
+      "updated_at": "2026-10-09T00:00:00+07:00"
+    }
+  ]
+}

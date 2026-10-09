@@ -1,0 +1,22 @@
+{
+  "source_file": "แผนที่สนับสนุนกรณีเกิดเหตุฉุกเฉิน (Google Map).kml",
+  "source_sha256": "851ff6e8236b79c2f9957abe5fa25b40fee04310f203332cf19db11a40888d0f",
+  "layers": [
+    {
+      "name": "AREA IEAT",
+      "file": "area-ieat.geojson",
+      "count": 74,
+      "type": "area"
+    }
+  ],
+  "placemarks": 7112,
+  "area_features": 74,
+  "estate_records": 73,
+  "port_records": 1,
+  "polygons": 82,
+  "holes": 14,
+  "vertices": 13680,
+  "point_method": "One interior scanline point in the largest polygon component per AREA IEAT feature; LOCATION IEAT remains separate.",
+  "validation": "Finite coordinates, ranges, closed rings, minimum distinct vertices, winding, unique IDs, representative points inside polygon and outside holes checked. Self-intersections and official boundary accuracy not verified.",
+  "note": "Counts refer to records in the supplied snapshot, not a current official count. Raw source areas and dates are preserved, not recalculated or calendar-converted."
+}

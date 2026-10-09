@@ -1,0 +1,6 @@
+.nav a{display:flex;align-items:center;color:var(--ink);font-size:13px;white-space:nowrap;padding:0 4px;text-decoration:none}
+.nav a:hover{color:var(--green)}
+[data-theme=farm] .nav a{color:#705332;font-weight:600}
+@media(max-width:960px){.nav a{font-size:11px}}
+@media(max-width:560px){.header{gap:5px}.brand{font-size:11px!important}.brand small{font-size:7px!important}.nav{gap:3px}.nav a{font-size:10px;padding:0 2px}.nav #compare-open{display:block;width:26px}.theme-toggle{width:30px;min-height:32px}}
+@media(max-width:360px){.brand{font-size:9px!important}.nav a{font-size:9px}}

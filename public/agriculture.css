@@ -1,0 +1,14 @@
+.sample-note{font-size:12px;line-height:1.6;color:var(--muted);margin:8px 0}
+.sample-banner{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);z-index:4;padding:7px 12px;border:1px solid #c49342;border-radius:7px;background:#fff5d9;color:#664a19;font-size:12px;text-align:center;max-width:90%;width:max-content;pointer-events:none}
+.sample-banner[hidden]{display:none}
+.ag-detail{font-family:Tahoma,sans-serif;max-height:40vh;overflow:auto;font-size:12px;line-height:1.6;padding:8px 3px;color:var(--ink)}
+.ag-detail h2{font-size:17px;line-height:1.4;margin:9px 0}.ag-detail h3{font-size:14px;margin-bottom:5px}
+.ag-detail dl{display:grid;grid-template-columns:1fr 1.3fr;gap:7px;margin:8px 0}.ag-detail dt{color:var(--muted)}.ag-detail dd{margin:0;overflow-wrap:anywhere}
+.ag-source{border-top:1px solid var(--line);padding-top:7px;font-size:11px}.ag-source a{text-decoration:underline}
+.ag-badge{display:inline-block;padding:3px 7px;border-radius:5px;background:#fff0cc;color:#6e4f1f;font-size:11px}
+.maplibregl-popup-close-button{font-size:22px;min-width:30px;min-height:30px}
+.topbar .brand-title{font-size:20px}.topbar .brand-title small{font-size:10px}.topbar .theme-switch{margin-left:auto}
+.layers-panel{overflow:auto;max-height:calc(100% - 90px)}
+@media(max-width:1000px){.header-label,.snapshot{display:none}}
+@media(max-width:700px){.topbar{gap:6px;padding:8px}.topbar .brand-title{font-size:14px!important}.topbar .brand-title small{font-size:8px!important}.topbar .official-mark,.topbar .brandmark{width:26px}.topbar .theme-switch button{padding:5px;font-size:10px}.topbar .brand{gap:5px}.sample-banner{font-size:10px;bottom:30px;padding:5px 8px}.ag-detail{max-height:32vh}.map-stage .layers-panel{max-height:calc(100% - 68px)}.map-info{display:none}}
+@media(max-width:380px){.topbar .brand{min-width:0;flex:1}.topbar .brand-title{min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:12px!important}.topbar .brand-title small{overflow:hidden;text-overflow:ellipsis;letter-spacing:.2px;font-size:7px!important}.topbar .official-mark{width:22px}.topbar .theme-switch button{min-width:35px;padding:5px 3px;font-size:9px}.topbar #mobile-panel{padding:5px;font-size:10px;flex:none}}

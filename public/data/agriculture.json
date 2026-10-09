@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "dataset": "agriculture",
+  "is_sample": true,
+  "updated_at": "2026-10-09T00:00:00+07:00",
+  "records": [
+    {
+      "id": "sample-ag-20-rice-2026",
+      "province_code": "20",
+      "province": "ชลบุรี",
+      "commodity_code": "rice",
+      "commodity": "ข้าว",
+      "reference_year": 2026,
+      "cultivated_area": {"value": 12000, "unit": "rai"},
+      "production": {"value": 7200, "unit": "tonne"},
+      "season": {"name": "นาปี (ตัวอย่าง)", "start_month": 5, "end_month": 11},
+      "economic_value": {"value": 72000000, "unit": "THB", "basis": "มูลค่าผลผลิตสมมติ ไม่ใช่ราคาอ้างอิง"},
+      "source": {"name": "ข้อมูลสมมติสำหรับทดสอบโครงสร้าง", "url": null},
+      "updated_at": "2026-10-09T00:00:00+07:00"
+    },
+    {
+      "id": "sample-ag-21-cassava-2026",
+      "province_code": "21",
+      "province": "ระยอง",
+      "commodity_code": "cassava",
+      "commodity": "มันสำปะหลัง",
+      "reference_year": 2026,
+      "cultivated_area": {"value": 18500, "unit": "rai"},
+      "production": {"value": 61000, "unit": "tonne"},
+      "season": {"name": "ฤดูผลิตตัวอย่าง", "start_month": 11, "end_month": 4},
+      "economic_value": {"value": null, "unit": "THB", "basis": null},
+      "source": {"name": "ข้อมูลสมมติสำหรับทดสอบโครงสร้าง", "url": null},
+      "updated_at": "2026-10-09T00:00:00+07:00"
+    },
+    {
+      "id": "sample-ag-24-rice-2026",
+      "province_code": "24",
+      "province": "ฉะเชิงเทรา",
+      "commodity_code": "rice",
+      "commodity": "ข้าว",
+      "reference_year": 2026,
+      "cultivated_area": {"value": null, "unit": "rai"},
+      "production": {"value": null, "unit": "tonne"},
+      "season": {"name": "รอยืนยันฤดูผลิต", "start_month": null, "end_month": null},
+      "economic_value": {"value": null, "unit": "THB", "basis": null},
+      "source": {"name": "ข้อมูลสมมติสำหรับทดสอบกรณีไม่มีตัวเลข", "url": null},
+      "updated_at": "2026-10-09T00:00:00+07:00"
+    }
+  ]
+}

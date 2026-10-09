@@ -1,0 +1,73 @@
+@font-face{font-family:Mali;src:url('assets/fonts/Mali-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:Mali;src:url('assets/fonts/Mali-SemiBold.ttf') format('truetype');font-style:normal;font-weight:600 900;font-display:swap}
+.theme-toggle{display:flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;padding:8px 12px;font-size:11px;min-height:36px;background:#f1f6f0;border-color:#cfdece}
+.theme-icon{font-size:20px;line-height:1}.header{gap:12px}
+
+html[data-theme=farm]{--ink:#4b3827;--muted:#81674c;--green:#4e713e;--pale:#e6edc4;--line:#d3bc85;--shadow:0 4px 0 #88623d24;font-family:Mali,'Leelawadee UI',sans-serif}
+[data-theme=farm] body{background:#e9d5a0}
+[data-theme=farm] .header{background:repeating-linear-gradient(0deg,#f6dfa7 0 24px,#f0d69a 24px 26px);border-bottom:3px solid #977047;box-shadow:inset 0 -3px #fff0c8}
+[data-theme=farm] .brand{color:#5c4026;font-family:Mali,sans-serif;font-size:18px;letter-spacing:-.65px;font-weight:700;text-shadow:0 1px #fff5ce}
+[data-theme=farm] .brand small{font-size:10px;color:#806444;letter-spacing:0}
+[data-theme=farm] .brand-icon{background:#6d8f43;border:2px solid #5b7137;box-shadow:inset 0 0 0 3px #a4b96e,0 3px #9b7943;border-radius:12px}
+[data-theme=farm] .nav button{font-weight:600;color:#705332}
+[data-theme=farm] .nav button.active{color:#476333;border-bottom-color:#77914a;text-shadow:0 1px #fff5d8}
+[data-theme=farm] .theme-toggle{color:#fff8d9;background:#668244;border:2px solid #485c2f;box-shadow:inset 0 2px #a6ba72,0 3px #8e693e;border-radius:7px}
+[data-theme=farm] .theme-icon{color:#ffe59b}
+[data-theme=farm] .review-pill{color:#745332;background:#f9ecc1;border:1px solid #ba945d}
+[data-theme=farm] .filters,[data-theme=farm] .details{background-color:#fff5d9;background-image:radial-gradient(#cba36a14 .7px,transparent .7px);background-size:5px 5px;scrollbar-color:#baa06b #f7e9c2;border-color:#b4915c;border-width:3px}
+[data-theme=farm] .filter-section h2,[data-theme=farm] .field strong,[data-theme=farm] .section-title h2{color:#6b4b2c;font-weight:700}
+[data-theme=farm] .search-field,[data-theme=farm] .field select{color:#62472e;background:#fffcef;border:2px solid #c2a16b;box-shadow:inset 0 2px #e9dcbb;border-radius:6px}
+[data-theme=farm] :is(.crop-grid,.region-grid,.detail-tabs) button,[data-theme=farm] .inline-actions button,[data-theme=farm] .load-more{color:#715332;background:#f7e4af;border:2px solid #b99760;border-radius:6px;box-shadow:inset 0 2px #fff4cf,0 2px #c7ac75}
+[data-theme=farm] :is(.crop-grid,.region-grid,.detail-tabs) button.active{background:#71944d;color:#fff9d9;border-color:#526d38;box-shadow:inset 0 2px #a9be78,0 2px #c7ac75}
+[data-theme=farm] :is(.crop-grid,.region-grid,.detail-tabs) button:hover{filter:brightness(1.05)}
+[data-theme=farm] .crop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+[data-theme=farm] .crop-grid button{padding:9px 3px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;white-space:nowrap}
+[data-theme=farm] .crop-grid button:before{display:block;flex:none;height:19px;font-size:17px;line-height:19px;filter:saturate(.75);content:'🌱'}
+[data-theme=farm] .crop-grid [data-product=PRD_RICE]:before{content:'🌾'}
+[data-theme=farm] .crop-grid [data-product=PRD_SUGARCANE]:before{content:'🎋'}
+[data-theme=farm] .crop-grid [data-product=PRD_NATURAL_RUBBER]:before{content:'🌳'}
+[data-theme=farm] .crop-grid [data-product=PRD_FEED_MAIZE]:before{content:'🌽'}
+[data-theme=farm] .crop-grid [data-product=PRD_OIL_PALM]:before{content:'🌴'}
+[data-theme=farm] :is(.research-card,.factory-card,.estate-card,.stat-card,.substat,.estate-detail,.map-summary,.map-legend,dialog){background:#fff9e7;border:2px solid #b28b54;border-radius:8px;box-shadow:inset 0 0 0 3px #f0dfb5,0 4px 0 #8c693024}
+[data-theme=farm] .stat-card{position:relative;background:linear-gradient(#eef0cb,#e4e8b9);border-color:#96a365;box-shadow:inset 0 0 0 3px #faf4cf,0 4px 0 #8c693024;padding-bottom:77px;overflow:hidden}
+[data-theme=farm] .stat-card:after{content:'';position:absolute;inset:auto 0 0;height:64px;background:url('assets/farm-scene.svg') bottom/100% 64px no-repeat;pointer-events:none}
+[data-theme=farm] .stat-card .stat-value{color:#516d35;font-size:30px;font-weight:700}
+[data-theme=farm] .stat-card p{color:#637044}
+[data-theme=farm] .scope-title{color:#674a2b;text-shadow:1px 2px #e5cc92}
+[data-theme=farm] .eyebrow:before{content:'✦ ';color:#ba8e3c}
+[data-theme=farm] :is(.research-card,.factory-card,.estate-card) h3{color:#694a2f}
+[data-theme=farm] :is(.research-card,.factory-card,.estate-card) p,[data-theme=farm] .notice{color:#775c41}
+[data-theme=farm] .quick-link{background:#e4edcf;border:2px solid #a0ae77;color:#50653d;box-shadow:inset 0 0 0 2px #f8f3d7,0 3px #baab7844}
+[data-theme=farm] .badge{background:#e6edc8;border:1px solid #c1cd94;color:#596a3d;border-radius:5px}
+[data-theme=farm] .badge.pending{background:#f9e0a3;border-color:#dcb975;color:#83561e}
+[data-theme=farm] .badge.blue{background:#e0e9dc;border-color:#b6c8af;color:#556f58}
+[data-theme=farm] .badge.purple{background:#e9dfeb;border-color:#c5aec4;color:#816080}
+[data-theme=farm] .rank-index{color:#8b6136;font-weight:700}
+[data-theme=farm] .rank-track{height:7px;background:#e8dbb6;border:1px solid #d6c293;border-radius:2px}
+[data-theme=farm] .rank-track i{background:#88a65b;border-radius:0;box-shadow:inset 0 1px #bfd391}
+[data-theme=farm] .rank-name,[data-theme=farm] .rank-number{font-weight:600}
+[data-theme=farm] .notice,[data-theme=farm] .empty{background:#f5eacc;border-color:#c4a477}
+[data-theme=farm] .sidebar-note{background:#e8e8bd;border:1px dashed #a6a36f;color:#637044}
+[data-theme=farm] .map-stage{border-bottom:3px solid #b7935c}
+[data-theme=farm] .map-summary{background:#fff7dfee}
+[data-theme=farm] .map-caption{background:#fff5d9e8;border:1px solid #bda16d;color:#705735;border-radius:5px}
+[data-theme=farm] .map-legend{background:#fff8e5f5;width:194px}
+[data-theme=farm] .map-home,[data-theme=farm] .maplibregl-ctrl-group{background:#f7e5b6;border:2px solid #a98451;box-shadow:inset 0 0 0 2px #ffefc3,0 3px #98764a44;border-radius:5px}
+[data-theme=farm] .maplibregl-ctrl-group button+button{border-top:1px solid #c9ab75}
+[data-theme=farm] .maplibregl-popup-content{background:#fff7db;border:2px solid #b7945c;color:#644a2f}
+[data-theme=farm] .maplibregl-popup-tip{border-top-color:#b7945c}
+[data-theme=farm] input[role=switch]{background:#d8c7a0;border:1px solid #bba172;height:20px;width:33px;border-radius:5px}
+[data-theme=farm] input[role=switch]:checked{background:#7b9652;border-color:#61793f}
+[data-theme=farm] input[role=switch]:before{border-radius:2px;background:#fff5d3;top:3px}
+[data-theme=farm] .reset-button{color:#967449;background:#fff1ce;border-color:#c4a675}
+[data-theme=farm] .mobile-bar{background:#e8d09b;border-top:2px solid #a8824e}
+[data-theme=farm] .mobile-bar button{background:#fff0c3;border:1px solid #b89660;box-shadow:0 2px #ab8753;border-radius:5px}
+[data-theme=farm] th{background:#f0e4bb}
+[data-theme=farm] dialog::backdrop{background:#443a2366}
+[data-theme=farm] .icon-button{color:#81603d}
+[data-theme=farm] .filters .panel-head,[data-theme=farm] .details .panel-head{background:#fff5d9}
+@media(min-width:961px) and (max-width:1250px){.theme-toggle{padding:6px 9px}.header{gap:10px}[data-theme=farm] .brand{font-size:15px}[data-theme=farm] .nav{gap:13px}}
+@media(max-width:960px){.theme-toggle{padding:6px 9px}.theme-label{display:none}[data-theme=farm] .brand{font-size:16px}}
+@media(max-width:560px){.header{gap:7px}.brand,[data-theme=farm] .brand{font-size:12px;gap:6px}.brand small,[data-theme=farm] .brand small{font-size:8px}.brand-icon{width:29px;height:29px}.theme-toggle{width:34px;min-height:34px;padding:5px;justify-content:center}.nav #compare-open{font-size:9px;max-width:41px}.map-summary small{font-size:8px}[data-theme=farm] .map-summary .summary-value{font-size:14px}[data-theme=farm] .map-legend{width:163px;font-size:9px}}
+@media(max-width:360px){.brand,[data-theme=farm] .brand{font-size:10px;letter-spacing:-.5px}.brand small,[data-theme=farm] .brand small{font-size:7px}.header{gap:4px;padding:0 8px}.brand-icon{width:25px;height:25px}.brand-icon img{width:21px;height:21px}[data-theme=farm] .map-summary .summary-value{font-size:12px}}
+@media(max-width:560px){.nav{align-self:center}.nav #compare-open{font-size:0;width:32px;min-height:34px;padding:3px}.nav #compare-open:before{content:'⇄';font-size:22px;line-height:1}}

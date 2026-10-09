@@ -1,0 +1,215 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "office-4814376e2abf",
+      "properties": {
+        "estate_id": "office-4814376e2abf",
+        "name": "นิคมอุตสาหกรรมอมตะซิตี้ สมาร์ทซิตี้ ชลบุรี",
+        "short_name": "อมตะซิตี้ สมาร์ทซิตี้ ชลบุรี",
+        "name_en": "",
+        "category": "estate",
+        "parts": 0,
+        "boundary_status": "pending",
+        "location_kind": "office",
+        "coordinate_source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "source_row": 50,
+        "source_sequence": 51,
+        "source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "work_line": null,
+        "area_rai": null,
+        "bbox": [
+          101.052368,
+          13.495731,
+          101.052368,
+          13.495731
+        ],
+        "province": "ชลบุรี",
+        "province_code": "20",
+        "region": "ภาคตะวันออก",
+        "region_id": "east",
+        "province_assignment": "office-point-in-province",
+        "latitude": 13.495731,
+        "longitude": 101.052368,
+        "imported_on": "2026-09-29",
+        "source_as_of": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.052368,
+          13.495731
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "office-96b250f7510d",
+      "properties": {
+        "estate_id": "office-96b250f7510d",
+        "name": "นิคมอุตสาหกรรมแอลพีพี นครสวรรค์",
+        "short_name": "แอลพีพี นครสวรรค์",
+        "name_en": "",
+        "category": "estate",
+        "parts": 0,
+        "boundary_status": "pending",
+        "location_kind": "office",
+        "coordinate_source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "source_row": 73,
+        "source_sequence": 76,
+        "source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "work_line": null,
+        "area_rai": null,
+        "bbox": [
+          100.579177,
+          15.652025,
+          100.579177,
+          15.652025
+        ],
+        "province": "นครสวรรค์",
+        "province_code": "60",
+        "region": "ภาคกลาง",
+        "region_id": "central",
+        "province_assignment": "office-point-in-province",
+        "latitude": 15.652025,
+        "longitude": 100.579177,
+        "imported_on": "2026-09-29",
+        "source_as_of": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.579177,
+          15.652025
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "office-fae89fb87277",
+      "properties": {
+        "estate_id": "office-fae89fb87277",
+        "name": "นิคมอุตสาหกรรมดับบลิวเอชเอ อีสเทิร์นซีบอร์ด 5",
+        "short_name": "ดับบลิวเอชเอ อีสเทิร์นซีบอร์ด 5",
+        "name_en": "",
+        "category": "estate",
+        "parts": 0,
+        "boundary_status": "pending",
+        "location_kind": "office",
+        "coordinate_source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "source_row": 77,
+        "source_sequence": 80,
+        "source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "work_line": null,
+        "area_rai": null,
+        "bbox": [
+          101.214999,
+          12.84755,
+          101.214999,
+          12.84755
+        ],
+        "province": "ระยอง",
+        "province_code": "21",
+        "region": "ภาคตะวันออก",
+        "region_id": "east",
+        "province_assignment": "office-point-in-province",
+        "latitude": 12.84755,
+        "longitude": 101.214999,
+        "imported_on": "2026-09-29",
+        "source_as_of": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.214999,
+          12.84755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "office-ebe91ccfa1eb",
+      "properties": {
+        "estate_id": "office-ebe91ccfa1eb",
+        "name": "นิคมอุตสาหกรรมเฮอร์มีส",
+        "short_name": "เฮอร์มีส",
+        "name_en": "",
+        "category": "estate",
+        "parts": 0,
+        "boundary_status": "pending",
+        "location_kind": "office",
+        "coordinate_source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "source_row": 78,
+        "source_sequence": 81,
+        "source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "work_line": null,
+        "area_rai": null,
+        "bbox": [
+          101.04357,
+          12.937821,
+          101.04357,
+          12.937821
+        ],
+        "province": "ชลบุรี",
+        "province_code": "20",
+        "region": "ภาคตะวันออก",
+        "region_id": "east",
+        "province_assignment": "office-point-in-province",
+        "latitude": 12.937821,
+        "longitude": 101.04357,
+        "imported_on": "2026-09-29",
+        "source_as_of": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.04357,
+          12.937821
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "office-a4576954e524",
+      "properties": {
+        "estate_id": "office-a4576954e524",
+        "name": "นิคมอุตสาหกรรมอารยะ",
+        "short_name": "อารยะ",
+        "name_en": "",
+        "category": "estate",
+        "parts": 0,
+        "boundary_status": "pending",
+        "location_kind": "office",
+        "coordinate_source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "source_row": 79,
+        "source_sequence": 82,
+        "source": "พิกัดสำนักงานนิคมฯ.xlsx",
+        "work_line": null,
+        "area_rai": null,
+        "bbox": [
+          100.904407,
+          13.605472,
+          100.904407,
+          13.605472
+        ],
+        "province": "สมุทรปราการ",
+        "province_code": "11",
+        "region": "ภาคกลาง",
+        "region_id": "central",
+        "province_assignment": "office-point-in-province",
+        "latitude": 13.605472,
+        "longitude": 100.904407,
+        "imported_on": "2026-09-29",
+        "source_as_of": null
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.904407,
+          13.605472
+        ]
+      }
+    }
+  ]
+}
