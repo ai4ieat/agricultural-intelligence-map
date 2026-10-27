@@ -1,11 +1,68 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {agriculturalRows,metricSummary,factoryRows,researchRows,validState,safeURL,escapeHTML} from '../public/explorer-model.js';
-import {colorFor,COLORS} from '../public/explorer-map.js';
+import {agriculturalRows,metricSummary,factoryRows,researchRows,validState,safeURL,escapeHTML,provinceMetricRows,productionBreakdown,rankRows,mapEstateSelection} from '../public/explorer-model.js';
+import {colorFor,COLORS,legendStep,legendNumber} from '../public/explorer-map.js';
 import {validateExplorer} from '../scripts/validate-explorer.mjs';
 const data=JSON.parse(await readFile(new URL('../public/data/explorer-data.json',import.meta.url),'utf8'));
-const base=validState(data,{industry:'all'});
+const base=validState(data,{product:'PRD_CASSAVA',industry:'all'});
+
+test('fresh defaults include every crop, industry and area',()=>{
+ const state=validState(data);
+ for(const key of ['product','industry','province','region','district','estate'])assert.equal(state[key],'all');
+ assert.equal(state.query,'');assert.equal(state.acceptedOnly,false);
+ assert.equal(factoryRows(data,state).length,data.factories.length);
+ assert.equal(provinceMetricRows(data,state).length,77);
+});
+
+test('map estate drilldown clears stale area/search and intersects the retained industry',()=>{
+ const stale={...base,product:'all',province:'PROV_65',region:'north',district:'old-district',query:'old search',industry:'IG_875825912F21'};
+ const selected=validState(data,{...stale,...mapEstateSelection(data,'ieat-9c85713b20b6')});
+ assert.equal(selected.estate,'EST_AEB9AEE77E8F');assert.equal(selected.product,'all');assert.equal(selected.industry,stale.industry);
+ assert.equal(selected.province,'all');assert.equal(selected.region,'all');assert.equal(selected.district,'all');assert.equal(selected.query,'');
+ const all=factoryRows(data,{...selected,industry:'all'});assert.equal(all.length,141);
+ const filtered=factoryRows(data,selected);assert(filtered.length>0);assert(filtered.length<all.length);
+ assert(filtered.every(f=>f.estate_id==='EST_AEB9AEE77E8F'&&f.industry_id===stale.industry));
+ assert.equal(factoryRows(data,{...selected,industry:'all',estate:'all'}).length,8604);
+ const restored=validState(data,Object.fromEntries(new URLSearchParams({estate:selected.estate,industry:selected.industry,province:'all'})));
+ assert.deepEqual(factoryRows(data,restored).map(f=>f.id),filtered.map(f=>f.id));
+});
+
+test('unmapped map estates never fall back to all factories; multiple registry aliases are included',()=>{
+ const selection=mapEstateSelection(data,'no-registry-match');
+ assert.equal(factoryRows(data,{...base,...selection}).length,0);
+ const fixture={estates:[{estate_id:'A',estate_name:'A',map_id:'MAP'},{estate_id:'B',estate_name:'B',map_id:'MAP'},{estate_id:'C',estate_name:'C',map_id:'OTHER'}],factories:[{id:'1',estate_id:'A',province_id:null},{id:'2',estate_id:'B',province_id:'PROV_20'},{id:'3',estate_id:'C',province_id:'PROV_20'}]};
+ const multi={...base,...mapEstateSelection(fixture,'MAP')};
+ assert.equal(multi.estate,'map:MAP');assert.deepEqual(factoryRows(fixture,multi).map(f=>f.id),['1','2']);
+});
+
+test('all crops preserves the selected province, reconciles tonnage and shares',()=>{
+ const state=validState(data,{product:'all',province:'PROV_65',industry:'all',metric:'AREA_PLANTED'});
+ assert.equal(state.product,'all');assert.equal(state.province,'PROV_65');assert.equal(state.metric,'PRODUCTION');
+ const rows=productionBreakdown(data,state);
+ assert.deepEqual(rows.map(r=>r.value),[860070,824256,558068,146700,61730,36049]);
+ assert.equal(rows[0].product_id,'PRD_SUGARCANE');
+ assert.equal(rows.reduce((sum,r)=>sum+r.value,0),2486873);
+ assert(Math.abs(rows.reduce((sum,r)=>sum+r.share,0)-100)<1e-10);
+ assert.equal(rows.find(r=>r.product_id==='PRD_CASSAVA').share,558068/2486873*100);
+ assert.deepEqual(rows[0].periods,['2566/67']);
+ assert.deepEqual(rows[1].periods,['2567/68']);
+ const mapRows=provinceMetricRows(data,state);
+ assert.equal(mapRows.length,1);assert.equal(mapRows[0].metrics.PRODUCTION.value,2486873);
+ assert.equal(metricSummary(provinceMetricRows(data,{...state,province:'all'}),'PRODUCTION').value,165823494);
+ const ranking=rankRows(data,state);assert.equal(new Set(ranking.map(r=>r.province_id)).size,ranking.length);
+});
+
+test('all-crop shares distinguish missing production and zero; industry still filters research',()=>{
+ const state={...base,product:'all',province:'unknown'};
+ assert(productionBreakdown(data,state).every(r=>r.value===null&&r.share===null));
+ const fixture={products:[{product_id:'A',name_th:'A'},{product_id:'B',name_th:'B'}],agriculture:[{product_id:'A',province_id:'P',crop_year:'2567',metrics:{PRODUCTION:{value:0,unit:'TONNE'}}}]};
+ const rows=productionBreakdown(fixture,{product:'all',province:'P',region:'all'});
+ assert.equal(rows[0].value,0);assert.equal(rows[0].share,null);assert.equal(rows[1].value,null);
+ assert.equal(researchRows(data,{...base,product:'all'}).length,36);
+ const filtered=researchRows(data,{...base,product:'all',industry:'IG_875825912F21'});
+ assert(filtered.length>0);assert(filtered.every(r=>r.industries.some(i=>i.industry_id==='IG_875825912F21')));
+});
 
 test('invalid cross-region state normalizes and choropleth boundaries agree',()=>{
  assert.equal(validState(data,{region:'south',province:'PROV_30'}).region,'all');
@@ -58,3 +115,10 @@ test('all current normalized IDs join and source records are not silently dedupl
 });
 test('untrusted source text is escaped and unsafe URLs rejected',()=>{assert.equal(safeURL('javascript:alert(1)'),null);assert.equal(safeURL('https://doi.org/10.3390/su152014713'),'https://doi.org/10.3390/su152014713');assert.equal(escapeHTML('<script>"&'),'&lt;script&gt;&quot;&amp;');});
 test('entrypoint loads real data explorer without legacy samples or monitoring scripts',async()=>{const html=await readFile(new URL('../public/index.html',import.meta.url),'utf8');assert.match(html,/explorer.js/);assert.doesNotMatch(html,/src="(?:app|mobile-layout|agriculture|data-contract)\.js"/);assert.doesNotMatch(html,/ข้อมูลสมมติ|ตัวอย่าง|NASA|Terrain|AI Chat/);});
+
+ test('rounded legend boundaries match map colors and retain zero/missing',()=>{
+ assert.equal(legendStep(10939568),2000000);assert.equal(legendStep(3660849),700000);
+ assert.equal(legendNumber(1500000),'1.5 ล้าน');assert.equal(legendNumber(700000),'0.7 ล้าน');
+ for(const max of [10939568,3660849,750000,0]){const step=legendStep(max);for(let i=1;i<5;i++){assert.equal(colorFor(step*i,max),COLORS[i]);assert.equal(colorFor(step*i-0.01,max),COLORS[i-1]);}}
+ assert.equal(colorFor(null,10939568),'#e5e8e2');assert.equal(colorFor(0,10939568),'#f5f8ef');
+ });

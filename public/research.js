@@ -62,6 +62,6 @@ async function start(){try{
  const compact=matchMedia('(max-width:760px)');
  $('filter-disclosure').open=!compact.matches;
  compact.addEventListener('change',e=>{$('filter-disclosure').open=!e.matches;});
- try{const mapHash=sessionStorage.getItem('aim-map-return');if(mapHash?.startsWith('#'))$('back-map').href='./'+mapHash;}catch{}
+ $('back-map').href='./';
  }catch(error){console.error(error);$('result-count').textContent='โหลดคลังวิจัยไม่สำเร็จ';$('research-grid').innerHTML='<div class="empty">กรุณารีเฟรชหน้าเว็บเพื่อลองอีกครั้ง</div>';}}
 start();

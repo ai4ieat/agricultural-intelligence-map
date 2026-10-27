@@ -1,7 +1,9 @@
-import {number,escapeHTML as esc,inScope} from './explorer-model.js';
+import {number,escapeHTML as esc,provinceMetricRows} from './explorer-model.js';
 const fc=features=>({type:'FeatureCollection',features});
 export const COLORS=['#d9ebce','#b4d395','#78b470','#438951','#1f6039'];
-export function colorFor(value,max){if(value==null)return '#e5e8e2';if(value===0)return '#f5f8ef';return COLORS[Math.min(4,Math.floor(value/(max||1)*5))];}
+export function legendStep(max){const raw=max/5;if(!Number.isFinite(raw)||raw<=0)return 1;const quantum=raw>=1e6?5e5:raw>=1e5?1e5:10**Math.floor(Math.log10(raw));return Math.max(quantum,Math.floor(raw/quantum)*quantum);}
+export function legendNumber(value){return value>=1e5?number(value/1e6,1)+' ล้าน':number(value,2);}
+export function colorFor(value,max){if(value==null)return '#e5e8e2';if(value===0)return '#f5f8ef';return COLORS[Math.min(4,Math.floor(value/legendStep(max)))];}
 export function extent(features){const b=new maplibregl.LngLatBounds();function walk(c){if(typeof c[0]==='number')b.extend(c);else c.forEach(walk);}features.forEach(f=>walk(f.geometry.coordinates));return b;}
 export async function createMap(data,onProvince,onEstate){
  const paths=['provinces.geojson','province-labels.geojson','area-ieat.geojson','estate-points.geojson','supplemental-estates.geojson','regions.geojson'];
@@ -21,15 +23,15 @@ export async function createMap(data,onProvince,onEstate){
  function status(text){const el=document.getElementById('map-status');el.textContent=text;el.hidden=!text;}
  map.on('error',e=>{if(e.error?.status||/fetch|network/i.test(e.error?.message||''))status('แผนที่พื้นหลังบางส่วนโหลดไม่ได้ • ข้อมูลในแผงยังใช้งานได้');});
  function fit(features){if(features.length)map.fitBounds(extent(features),{padding:{top:125,bottom:85,left:40,right:45},maxZoom:11,duration});}
- function geographicEstates(){return allEstates.filter(f=>inScope('PROV_'+f.properties.province_code,state,data));}
- function update(s){state=s;agriculture=new Map(data.agriculture.filter(r=>r.product_id===s.product).map(r=>[r.province_id,r.metrics[s.metric]?.value??null]));max=Math.max(0,...[...agriculture.values()].filter(v=>v!==null));if(!loaded)return;
+ function update(s){state=s;agriculture=new Map(provinceMetricRows(data,{...s,province:'all',region:'all'}).map(r=>[r.province_id,r.metrics[s.metric]?.value??null]));max=Math.max(0,...[...agriculture.values()].filter(v=>v!==null));if(!loaded)return;
   const colored=provinces.features.map(f=>{const pid='PROV_'+f.properties.code;const regionMatch=s.region==='all'||f.properties.region_id===s.region;return {...f,properties:{...f.properties,fill:regionMatch?colorFor(agriculture.get(pid),max):'#e9ede6'}};});
   map.getSource('provinces').setData(fc(colored));map.setFilter('province-selected',['==',['get','code'],s.province.replace('PROV_','')]);
-  const es=geographicEstates(),ids=new Set(es.map(f=>f.properties.estate_id));map.getSource('areas').setData(fc(es.filter(f=>f.geometry.type!=='Point')));map.getSource('estate-points').setData(fc(allPoints.filter(f=>ids.has(f.properties.estate_id))));
+  // Estate geometry stays nationwide; geographic filters apply to result lists only.
   const top=new Set([...agriculture.entries()].filter(([,v])=>v!=null).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([id])=>id.replace('PROV_','')));
   map.getSource('highlight-labels').setData(fc(labels.features.filter(f=>top.has(f.properties.code)||'PROV_'+f.properties.code===s.province)));layers();
  }
  function layers(){if(!loaded)return;const set=(ids,show)=>ids.forEach(id=>map.setLayoutProperty(id,'visibility',show?'visible':'none'));set(['agri-fill'],document.getElementById('agri-layer').checked);set(['province-lines','province-labels'],document.getElementById('province-layer').checked);set(['area-fill','area-line','clusters','cluster-count','estate-dots','estate-labels','estate-selected-fill','estate-selected-line','estate-selected-point'],document.getElementById('estate-layer').checked);for(const l of style.layers)if(l.type==='symbol')map.setLayoutProperty(l.id,'visibility',document.getElementById('base-labels').checked?'visible':'none');}
+ function clearEstate(){selectedEstate=null;if(loaded)map.getSource('estate-selection').setData(fc([]));}
  function focusProvince(pid){selectedEstate=null;if(loaded)map.getSource('estate-selection').setData(fc([]));const list=pid==='all'?provinces.features:provinces.features.filter(f=>'PROV_'+f.properties.code===pid);if(list.length)fit(list);}
  function focusRegion(region){selectedEstate=null;if(loaded)map.getSource('estate-selection').setData(fc([]));fit(region==='all'?provinces.features:provinces.features.filter(f=>f.properties.region_id===region));}
  function focusEstate(id){const f=allEstates.find(f=>f.properties.estate_id===id);if(!f)return;selectedEstate=id;document.getElementById('estate-layer').checked=true;layers();if(loaded)map.getSource('estate-selection').setData(fc([f]));if(f.geometry.type==='Point')map.easeTo({center:f.geometry.coordinates,zoom:12,duration});else fit([f]);}
@@ -54,9 +56,9 @@ export async function createMap(data,onProvince,onEstate){
    const p=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];if(p)onProvince('PROV_'+p.properties.code);
   });
   const popup=new maplibregl.Popup({closeButton:false,closeOnClick:false,offset:13});
-  map.on('mousemove',e=>{const estatesHit=map.queryRenderedFeatures(e.point,{layers:['estate-dots','clusters','area-fill']});if(estatesHit.length){const p=estatesHit[0].properties;map.getCanvas().style.cursor='pointer';popup.setLngLat(e.lngLat).setHTML(p.point_count?`<strong>${number(p.point_count)} พื้นที่นิคม / ท่าเรือ</strong>คลิกเพื่อขยายกลุ่ม`:`<strong>${esc(p.short_name||p.name)}</strong>${p.boundary_status==='pending'?'จุดสำนักงาน • รอขอบเขต':'นิคม / ท่าเรือ • คลิกดูรายละเอียด'}`).addTo(map);return;}const hit=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];map.getCanvas().style.cursor=hit?'pointer':'';if(hit&&state){const val=agriculture.get('PROV_'+hit.properties.code);popup.setLngLat(e.lngLat).setHTML(`<strong>${esc(hit.properties.name)}</strong>${val==null?'ไม่มีข้อมูลในชุดนี้':number(val)+' '+(state.metric==='PRODUCTION'?'ตัน':'ไร่')}`).addTo(map);}else popup.remove();});map.getCanvas().addEventListener('mouseleave',()=>popup.remove());map.on('movestart',()=>popup.remove());
+  map.on('mousemove',e=>{const estatesHit=map.queryRenderedFeatures(e.point,{layers:['estate-dots','clusters','area-fill']});if(estatesHit.length){const p=estatesHit[0].properties;map.getCanvas().style.cursor='pointer';popup.setLngLat(e.lngLat).setHTML(p.point_count?`<strong>${number(p.point_count)} พื้นที่นิคม / ท่าเรือ</strong>คลิกเพื่อขยายกลุ่ม`:`<strong>${esc(p.short_name||p.name)}</strong>${p.boundary_status==='pending'?'จุดสำนักงาน • รอขอบเขต':'นิคม / ท่าเรือ • คลิกดูรายละเอียด'}`).addTo(map);return;}const hit=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];map.getCanvas().style.cursor=hit?'pointer':'';if(hit&&state){const val=agriculture.get('PROV_'+hit.properties.code);popup.setLngLat(e.lngLat).setHTML(`<strong>${esc(hit.properties.name)}</strong>${val==null?'ไม่มีข้อมูลในชุดนี้':number(val)+' '+(state.metric==='PRODUCTION'?'ตัน':'ไร่')+(state.product==='all'?' · รวมพืชในระบบ':'')}`).addTo(map);}else popup.remove();});map.getCanvas().addEventListener('mouseleave',()=>popup.remove());map.on('movestart',()=>popup.remove());
   loaded=true;applyTheme();status('');if(state)update(state);if(state?.province&&!['all','unknown'].includes(state.province))focusProvince(state.province);else focusRegion(state?.region||'all');resolve();
  }));
  new ResizeObserver(()=>map.resize()).observe(document.getElementById('map'));
- return {map,ready,update,layers,focusProvince,focusRegion,focusEstate,allEstates,getMax:()=>max};
+ return {map,ready,update,layers,clearEstate,focusProvince,focusRegion,focusEstate,allEstates,getMax:()=>max};
 }
