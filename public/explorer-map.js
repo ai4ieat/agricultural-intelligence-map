@@ -1,8 +1,9 @@
+import {metricDescriptor,unitLabel} from './bio-model.js';
 import {number,escapeHTML as esc,provinceMetricRows} from './explorer-model.js';
 const fc=features=>({type:'FeatureCollection',features});
 export const COLORS=['#d9ebce','#b4d395','#78b470','#438951','#1f6039'];
 export function legendStep(max){const raw=max/5;if(!Number.isFinite(raw)||raw<=0)return 1;const quantum=raw>=1e6?5e5:raw>=1e5?1e5:10**Math.floor(Math.log10(raw));return Math.max(quantum,Math.floor(raw/quantum)*quantum);}
-export function legendNumber(value){return value>=1e5?number(value/1e6,1)+' ล้าน':number(value,2);}
+export function legendNumber(value){return value>=1e5?number(value/1e6,1)+' ล้าน':number(value,value>0&&value<.01?Math.min(8,1-Math.floor(Math.log10(value))):2);}
 export function colorFor(value,max){if(value==null)return '#e5e8e2';if(value===0)return '#f5f8ef';return COLORS[Math.min(4,Math.floor(value/legendStep(max)))];}
 export function extent(features){const b=new maplibregl.LngLatBounds();function walk(c){if(typeof c[0]==='number')b.extend(c);else c.forEach(walk);}features.forEach(f=>walk(f.geometry.coordinates));return b;}
 export async function createMap(data,onProvince,onEstate){
@@ -56,7 +57,7 @@ export async function createMap(data,onProvince,onEstate){
    const p=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];if(p)onProvince('PROV_'+p.properties.code);
   });
   const popup=new maplibregl.Popup({closeButton:false,closeOnClick:false,offset:13});
-  map.on('mousemove',e=>{const estatesHit=map.queryRenderedFeatures(e.point,{layers:['estate-dots','clusters','area-fill']});if(estatesHit.length){const p=estatesHit[0].properties;map.getCanvas().style.cursor='pointer';popup.setLngLat(e.lngLat).setHTML(p.point_count?`<strong>${number(p.point_count)} พื้นที่นิคม / ท่าเรือ</strong>คลิกเพื่อขยายกลุ่ม`:`<strong>${esc(p.short_name||p.name)}</strong>${p.boundary_status==='pending'?'จุดสำนักงาน • รอขอบเขต':'นิคม / ท่าเรือ • คลิกดูรายละเอียด'}`).addTo(map);return;}const hit=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];map.getCanvas().style.cursor=hit?'pointer':'';if(hit&&state){const val=agriculture.get('PROV_'+hit.properties.code);popup.setLngLat(e.lngLat).setHTML(`<strong>${esc(hit.properties.name)}</strong>${val==null?'ไม่มีข้อมูลในชุดนี้':number(val)+' '+(state.metric==='PRODUCTION'?'ตัน':'ไร่')+(state.product==='all'?' · รวมพืชในระบบ':'')}`).addTo(map);}else popup.remove();});map.getCanvas().addEventListener('mouseleave',()=>popup.remove());map.on('movestart',()=>popup.remove());
+  map.on('mousemove',e=>{const estatesHit=map.queryRenderedFeatures(e.point,{layers:['estate-dots','clusters','area-fill']});if(estatesHit.length){const p=estatesHit[0].properties;map.getCanvas().style.cursor='pointer';popup.setLngLat(e.lngLat).setHTML(p.point_count?`<strong>${number(p.point_count)} พื้นที่นิคม / ท่าเรือ</strong>คลิกเพื่อขยายกลุ่ม`:`<strong>${esc(p.short_name||p.name)}</strong>${p.boundary_status==='pending'?'จุดสำนักงาน • รอขอบเขต':'นิคม / ท่าเรือ • คลิกดูรายละเอียด'}`).addTo(map);return;}const hit=map.queryRenderedFeatures(e.point,{layers:['agri-fill']})[0];map.getCanvas().style.cursor=hit?'pointer':'';if(hit&&state){const val=agriculture.get('PROV_'+hit.properties.code);popup.setLngLat(e.lngLat).setHTML(`<strong>${esc(hit.properties.name)}</strong>${val==null?'ไม่มีข้อมูลในชุดนี้':number(val,Math.abs(val)>0&&Math.abs(val)<0.01?6:2)+' '+(data.bio?unitLabel(data,metricDescriptor(data,state).unit):(state.metric==='PRODUCTION'?'ตัน':'ไร่'))}`).addTo(map);}else popup.remove();});map.getCanvas().addEventListener('mouseleave',()=>popup.remove());map.on('movestart',()=>popup.remove());
   loaded=true;applyTheme();status('');if(state)update(state);if(state?.province&&!['all','unknown'].includes(state.province))focusProvince(state.province);else focusRegion(state?.region||'all');resolve();
  }));
  new ResizeObserver(()=>map.resize()).observe(document.getElementById('map'));

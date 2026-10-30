@@ -1,0 +1,33 @@
+{
+  "excluded": {
+    "crops_review_rows": 181,
+    "crops_catalog_without_statistics": 1,
+    "fisheries_held_rows": 41,
+    "fisheries_other_geography_rows": 8
+  },
+  "imports": {
+    "crops": {
+      "spreadsheet_id": "1mIpJl-2z2Lx6MUx7Y5dAD9foOb9Q-giOWcV0B66Iqt4",
+      "url": "https://docs.google.com/spreadsheets/d/1mIpJl-2z2Lx6MUx7Y5dAD9foOb9Q-giOWcV0B66Iqt4/edit",
+      "sha256": "dafae162e79465d24e3373b90b90ba903bc6bc7649abb1d083aa7506f1aa6321"
+    },
+    "fisheries": {
+      "spreadsheet_id": "1JoTWw_Y6OWeh4_3YW564w9Gj84KFIkRHJ8KbUbjPwTU",
+      "url": "https://docs.google.com/spreadsheets/d/1JoTWw_Y6OWeh4_3YW564w9Gj84KFIkRHJ8KbUbjPwTU/edit",
+      "sha256": "19c9ff879c1307115bb2287abe7c7a6490ca1d42915cff63cea64da04ec424d7"
+    },
+    "livestock": {
+      "spreadsheet_id": "1H_YJRw72yT7tq-kBcJjnLfkf6uqeHi7giDjeZ-En7RA",
+      "url": "https://docs.google.com/spreadsheets/d/1H_YJRw72yT7tq-kBcJjnLfkf6uqeHi7giDjeZ-En7RA/edit",
+      "sha256": "c4427f8b3f0b048e74678f4e86997765facc55b6377b975cbb609d5ea293b6df"
+    }
+  },
+  "products_by_category": {
+    "crops": 98,
+    "fisheries": 39,
+    "livestock": 13
+  },
+  "series": 497,
+  "province_rows": 40670,
+  "national_rows": 320
+}

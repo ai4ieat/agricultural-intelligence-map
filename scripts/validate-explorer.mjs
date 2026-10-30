@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {validateFactoryTags} from './validate-factory-tags.mjs';
+import {validateBioResources} from './validate-bio-resources.mjs';
 
 export function validateExplorer(d,mapIds){
  assert.equal(d.schema_version,2,'schema_version');
@@ -50,4 +51,5 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const data=await read('explorer-data.json');
  console.log(validateExplorer(data,ids));
  console.log(validateFactoryTags(await read('factory-tags.json'),data));
+ console.log(validateBioResources(await read('bio-resources.json'),data));
 }
